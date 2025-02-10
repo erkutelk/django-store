@@ -1,0 +1,173 @@
+{% extends "Home/layout.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}Erkshop| {{ isim.prodact_name }}{% endblock title %}
+    <link rel="stylesheet" href="{% static 'Home/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'Home/assets/css/font-awesome.min.css' %}">
+    <style>
+        .product-section {
+            padding: 50px 0;
+        }
+        .left-images img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .right-content {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .stars i {
+            color: #FFD700;
+        }
+        .quote {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .main-border-button {
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .quantity-content {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .quantity-content .left-content {
+            margin-right: 15px;
+        }
+        .total h4 {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <section class="product-section" id="product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="left-images">
+                        {% for image in isim.images.all %}
+                        <img src="{{ image.image.url }}" alt="">
+
+                        {% endfor %}
+
+
+                       
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="right-content">
+                        <h4>{{ isim.prodact_name }}</h4>
+                        <span class="price">$ {{ isim.price }}</span>
+                        <ul class="stars">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <span>{{ isim.description }}</span>
+                        <div class="quote">
+                            <i class="fa fa-quote-left"></i>
+                            <p>{{ isim.technical_specifications }}</p>
+                        </div>
+                        <div class="quantity-content">
+                            <div class="left-content">
+                                <h6><strong>Adet</strong></h6>
+                            </div>
+                            <form action="/add-to-cart/">
+                                
+                            <div class="right-content">
+                                <div class="quantity buttons_added">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4">
+                                    <input type="button" value="+" class="plus">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="total">
+                                <input type="hidden" name='prod_id' value='{{ isim.id }}'/>
+                                <h4><strong>Fiyat: </strong>${{ isim.price }}</h4>
+                                <div class="main-border-button">
+                                    <button type="submit" class="btn btn-primary">Sepete Ekle</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const minusButtons = document.querySelectorAll('.minus');
+                const plusButtons = document.querySelectorAll('.plus');
+                const quantityInputs = document.querySelectorAll('.qty');
+        
+                minusButtons.forEach((button, index) => {
+                    button.addEventListener('click', function() {
+                        let currentValue = parseInt(quantityInputs[index].value);
+                        if (currentValue > 1) {
+                            quantityInputs[index].value = currentValue - 1;
+                        }
+                    });
+                });
+        
+                plusButtons.forEach((button, index) => {
+                    button.addEventListener('click', function() {
+                        let currentValue = parseInt(quantityInputs[index].value);
+                        quantityInputs[index].value = currentValue + 1;
+                    });
+                });
+            });
+        </script>
+    </section>
+    <style>
+    .total {
+        background-color: #f0f8ff; /* Light background for contrast */
+        border: 1px solid #007bff; /* Border for definition */
+        border-radius: 10px; /* Rounded corners */
+        padding: 20px; /* Spacing inside the box */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        display: flex; /* Flexbox for layout */
+        justify-content: space-between; /* Space between elements */
+        align-items: center; /* Center align vertically */
+        margin-top: 20px; /* Margin on top */
+    }
+    .total h4 {
+        font-weight: bold;
+        color: #007bff; /* Primary color */
+        font-size: 1.5rem; /* Larger font size */
+    }
+    .main-border-button {
+        display: inline-block;
+        margin-left: 15px; /* Space between total and button */
+    }
+    .main-border-button button {
+        background-color: #28a745; /* Green background for button */
+        color: white; /* White text */
+        border: none; /* Remove default border */
+        border-radius: 5px; /* Rounded button */
+        padding: 10px 15px; /* Padding for button */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s; /* Smooth transition */
+    }
+    .main-border-button button:hover {
+        background-color: #218838; /* Darker green on hover */
+    }
+</style>
+
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "Home/layout.html" %}
+{% block content %}
+<div class="container">
+    <form action="" method='POST' novalidate style='margin-top:200px;'>
+        {% csrf_token %}
+        {% for fm in form %}
+            {{fm.label_tag}} {{fm}} <small class='text-danger'></small>
+            {% if error %}
+            <h1>Hata var</h1>
+            
+            {% endif %}
+        {% endfor %}
+        <a href="{% url "password_reset" %}">Şireyi Sıfırla</a>
+        <button type="submit">Kaydet</button>
+    </form>
+</div>
+
+{% endblock content %}
+

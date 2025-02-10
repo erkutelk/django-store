@@ -1,0 +1,200 @@
+{% load static %}
+
+<!-- Sections -->
+{% for a in katogiler_models_card %}
+<section class="section" id="{{ a.Title|slugify }}">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <div class="section-heading">
+                    <h2>{{ a.Title }}</h2>
+                    <span>{{ a.aciklama }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="men-item-carousel">
+                    <div class="owl-men-item owl-carousel">
+                        {% for urun in a.urunler.all %}
+                        <div class="item">
+                            <div class="thumb">
+                                <form action="{% url 'add-to-card-home' %}" method="GET">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="prod_id" value="{{ urun.id }}" />
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <div class="hover-content">
+                                        <ul class="icon-buttons">
+                                            <li>
+                                                <button type="submit" class="icon-button" title="View Details">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </li>
+                                        
+                                            <li>
+                                                <button type="submit" class="icon-button" title="Add to Cart"><i class="fa fa-shopping-cart"></i></button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                                <a href="{% url 'erkek_popiler' urun.slug %}">
+                                    <div class="image-container">
+                                        {% if urun.images.all %}
+                                        <img src="{{ urun.images.all.0.image.url }}" alt="Ürün Resmi" class="product-image">
+                                        {% else %}
+                                        <img src="{% static 'path/to/default/image.jpg' %}" alt="Default Image" class="product-image">
+                                        {% endif %}
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="down-content">
+                                <h4><a href="{% url 'erkek_popiler' urun.slug %}" class="product-title">{{ urun.prodact_name }}</a></h4>
+                                <span class="price">{{ urun.price }} TL</span>
+                                <ul class="stars">
+                                    {% for i in "12345" %}
+                                    <li><i class="fa fa-star"></i></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+
+<!-- CSS Styling -->
+<style>
+    .section-heading {
+        margin-bottom: 40px;
+    }
+
+    .section-heading h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .section-heading span {
+        font-size: 16px;
+        color: #777;
+    }
+
+    .men-item-carousel {
+        margin-top: 30px;
+    }
+
+    .item {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .item:hover {
+        transform: translateY(-10px);
+    }
+
+    .thumb {
+        position: relative;
+    }
+
+    .image-container {
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .hover-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .thumb:hover .hover-content {
+        opacity: 1;
+    }
+
+    .icon-buttons {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    .icon-buttons li {
+        margin: 0 10px;
+    }
+
+    .icon-button {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 50%;
+        padding: 12px;
+        font-size: 18px;
+        color: #333;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .icon-button:hover {
+        background-color: #ff6347;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .down-content {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .product-title {
+        font-size: 18px;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .product-title:hover {
+        color: #ff6347;
+    }
+
+    .price {
+        font-size: 16px;
+        color: #777;
+        margin-top: 10px;
+    }
+
+    .stars {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .stars i {
+        color: #f4c150;
+        margin-right: 2px;
+    }
+</style>

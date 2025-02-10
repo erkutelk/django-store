@@ -1,0 +1,16 @@
+{% extends "Home/layout.html" %}
+{% block content %}
+{% block title %}Erkshop| Parola Değiştir{% endblock title %}
+
+<div class="container">
+    <form action="" method='POST' novalidate style='margin-top:200px;'>
+        {% csrf_token %}
+        {% for fm in form %}
+            {{fm.label_tag}} {{fm}} <small class='text-danger'></small>
+        {% endfor %}
+        <button type="submit">Kaydet</button>
+    </form>
+</div>
+
+{% endblock content %}
+

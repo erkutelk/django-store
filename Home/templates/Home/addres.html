@@ -1,0 +1,41 @@
+{% extends "Home/layout.html" %}
+
+{% block content %}
+{% block title %}Erkshop| Adres Güncelle{% endblock title %}
+
+<div class="container" style='margin-top:150px;'>
+    <div class="row">
+        {% include "Home/partials/_kullanıcı-menu.html" %}
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row">
+                        {% if naber %}
+                            {% for fm in naber %}
+                                    <div class="col-md-6 mb-3">
+                                        <h5 class="text-primary">{{ fm.user |title }}</h5>
+                                        <p><strong>İsim:</strong> {{ fm.name |title }}</p>
+                                        <p><strong>Konum:</strong> {{ fm.locality |title }}</p>
+                                        <p><strong>İlçe:</strong> {{ fm.city |title }}</p>
+                                        <p><strong>Telefon:</strong> {{ fm.mobile |title }}</p>
+                                        <p><strong>Posta Kodu:</strong> {{ fm.zipcode |title }}</p>
+                                        <p><strong>İl:</strong> {{ fm.state |title }}</p>
+                                        <p>
+                                            <a href="{% url 'adres_update' fm.id %}" class="btn btn-outline-primary btn-sm">
+                                                Düzenle
+                                            </a>
+                                        </p>
+                                    </div>
+                            {% endfor %}
+                        {% else %}
+                        <div class="alert alert-danger" role="alert">
+                            Adres bilginiz bulunmamaktadır..
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

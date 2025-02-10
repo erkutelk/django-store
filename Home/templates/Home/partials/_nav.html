@@ -1,0 +1,69 @@
+<!-- Header Menu -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <a href="{% url 'home' %}" class="logo">
+                        <img src="{{ logo.image.url }}" alt="Logo">
+                    </a>
+
+                    <!-- Dynamic Menu Items -->
+                    <ul class="nav">
+                        {% for sss in kategori %}
+                        <li class="scroll-to-section">
+                            <a href="#{{ sss.Title|slugify }}">{{ sss.Title }}</a>
+                        </li>
+                        {% endfor %}
+                        
+                        <!-- Other Menu Items -->
+                        <li class="submenu">
+                            <a href="javascript:;">Diğer Sayfalar</a>
+                            <ul>
+                                <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+                                <li><a href="{% url 'login' %}">Giriş Yap</a></li>
+                                <li><a href="{% url 'register' %}">Kayıt Oluştur</a></li>
+                            </ul>
+                        </li>
+                        <li class="scroll-to-section"><a href="{% url 'showcart' %}">Sepet</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'Profile' %}">Hesabım</a></li>
+                    </ul>
+
+                    <a class="menu-trigger">
+                        <span>Menu</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</header>
+<script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll("section");
+            const navLinks = document.querySelectorAll("nav ul li a");
+    
+            window.addEventListener("scroll", () => {
+                let current = "";
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= sectionTop - 60) {
+                        current = section.getAttribute("id");
+                    }
+                });
+    
+                navLinks.forEach(link => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href").includes(current)) {
+                        link.classList.add("active");
+                    }
+                });
+            });
+        });
+    
+    </script>

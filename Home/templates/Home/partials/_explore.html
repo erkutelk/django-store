@@ -1,0 +1,50 @@
+<section class="section" id="explore">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="left-content">
+                    {% for a in aciklama %}
+                    <h2>{{a.title}}</h2>
+                    <span>{{a.description|slice:":50"}}</span>
+                    <div class="quote">
+                        <i class="fa fa-quote-left"></i><p>{{a.description|slice:"50:"}}</p>
+                    </div>
+                    <div class="main-border-button">
+                        <a href="/about">Discover More</a>
+                      
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="right-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="leather">
+                                <h4>{{a.image1_title}}</h4>
+                                <span>{{a.image1_title|slice:":10"}}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="first-image">
+                                <img src="assets/images/explore-image-01.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="second-image">
+                                <img src="assets/images/explore-image-02.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="types">
+                                <h4>{{a.image2_title}}</h4>
+                                <span>{{a.image2_title|slice:":10"}}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

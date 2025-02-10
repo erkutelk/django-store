@@ -1,0 +1,98 @@
+{% extends "Home/layout.html" %}
+{% load static %}
+
+{% block content %}
+{% block title %}Erkshop| Hakkımızda{% endblock title %}
+
+{% for b in intro_about %}
+<div class="page-heading about-page-heading" style="background-image:url('{{ b.images.url }}')" id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="inner-content text-center">
+                    <h2>{{b.title}}</h2>
+                    <p>{{b.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% for a in partials %}
+<!-- ***** About Area Starts ***** -->
+<div class="about-us py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="left-image">
+                    <img class="img-fluid" src="{{a.image.url}}" alt="{{a.title}}">
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center">
+                <div class="right-content">
+                    <h4>{{a.title}}</h4>
+                    <p>{{a.aciklama}}</p>
+                    <ul class="social-icons d-flex list-unstyled">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- ***** Our Team Area Starts ***** -->
+<section class="our-team py-5">
+    <div class="container">
+        <div class="section-heading text-center mb-5">
+            <h2>{{partials2.about_page}}</h2>
+            <p>{{partials2.aciklama}}</p>
+        </div>
+        <div class="row">
+            {% for a in partials3 %}
+            <div class="col-lg-4 mb-4">
+                <div class="team-item">
+                    <div class="thumb position-relative">
+                        <img class="img-fluid" src="{{a.images.url}}" alt="{{a.title}}">
+                        <div class="hover-effect position-absolute w-100 h-100 d-flex align-items-center justify-content-center">
+                            <ul class="social-icons d-flex list-unstyled">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="down-content text-center mt-3">
+                        <h4>{{a.title}}</h4>
+                        <p>{{a.description}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ***** Our Team Area Ends ***** -->
+
+<!-- ***** Services Area Starts ***** -->
+<script>
+    $(function() {
+        var selectedClass = "";
+        $("p").click(function(){
+            selectedClass = $(this).attr("data-rel");
+            $("#portfolio").fadeTo(50, 0.1);
+            $("#portfolio div").not("."+selectedClass).fadeOut();
+            setTimeout(function() {
+                $("."+selectedClass).fadeIn();
+                $("#portfolio").fadeTo(50, 1);
+            }, 500);
+        });
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends "Home/home.html" %}
+<div class="container" style="max-width: 100%; overflow-x: hidden;">
+
+    {% block content %}
+    <div class="row justify-content-center" style='margin-top:100px;'>
+        <div class="col-md-6 col-sm-10 col-12">
+            <form action="" method='POST' novalidate class="p-4 border rounded">
+                {% csrf_token %}
+                {% for fm in form %}
+                    <div class="mb-3">
+                        {{ fm.label_tag }}
+                        {{ fm  }}
+                        {% if fm.errors %}
+                            <div class="text-danger small mt-1">{{ fm.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="alert alert-info">{{ msg }}</div>
+                    {% endfor %}
+                {% endif %}
+                <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+            </form>
+        </div>
+    </div>
+    {% endblock content %}
+
+</div>

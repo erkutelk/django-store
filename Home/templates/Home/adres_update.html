@@ -1,0 +1,23 @@
+{% extends "Home/layout.html" %}
+{% block content %}
+
+<div class="container">
+    {% block title %}Erkshop| Adres Güncelle{% endblock title %}
+
+    <form action="" method='POST' novalidate style='margin-top:200px;'>
+        {% csrf_token %}
+        {% for fm in form %}
+            {{fm.label_tag}} {{fm}} <small class='text-danger'></small>
+            {% if error %}
+            <h1>Hata var</h1>
+            
+            {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary"><a href=""></a>Kaydet</button>
+        <a href="{% url 'adres' %}" class="btn btn-primary">Geri Dön</a>
+
+    </form>
+</div>
+
+{% endblock content %}
+

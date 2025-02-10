@@ -1,0 +1,117 @@
+{% extends "Home/layout.html" %}
+{% load static %}
+
+{% block content %}
+{% block title %}Erkshop| Sepet{% endblock title %}
+<div class="kutu" style='margin-top: 50px;'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <section class="h-100 gradient-custom">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header py-3 bg-dark text-white">
+                            <h5 class="mb-0">{{ cart|length }} Adet Ürün</h5>
+                        </div>
+                        <div class="card-body">
+                            {% for crt in cart %}
+                            <div class="card mb-3 border rounded">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        
+                                        <img src="{{ crt.Prodact.images.all.0.image.url }}" class="img-fluid rounded-start" alt="{{ crt.Prodact.prodact_name }}" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><a href="{% url 'erkek_popiler' crt.Prodact.slug %}">{{ crt.Prodact.prodact_name }}</a></h5>
+                                            <p class="card-text">{{ crt.Prodact.description }}</p>
+                                            <p class="card-text"><strong>Beden:</strong> {{ crt.Prodact.technical_specifications }}</p>
+                                            <p class="card-text"><strong>Ekleme Tarihi: </strong>{{ crt.Prodact.date }}</p>
+                                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                                <div>
+                                                    <form method="POST" action="{% url 'cart_delete' crt.id %}" style="display:inline;">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm me-2">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                    
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <button class="btn btn-light px-2" onclick="changeQuantity(this, -1)">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                    <input id="quantity-{{ forloop.counter }}" min="0" name="quantity" value="{{ crt.quantity }}" type="number" class="form-control form-control-sm text-center" style="max-width: 60px;" oninput="updateTotal()" />
+                                                    <button class="btn btn-light px-2" onclick="changeQuantity(this, 1)">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <p class="text-muted mb-0 price" data-price="{{ crt.Prodact.price }}"><strong>${{ crt.Prodact.price }}</strong></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header py-3 bg-dark text-white">
+                            <h5 class="mb-0">Sipariş Özeti</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Toplam Ürün
+                                    <span id="total-amount">${{ totalAmount }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Kargo
+                                    <span>Ücretsiz</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Ürün Toplam</strong>
+                                    <strong id="final-amount">${{ totalAmount }}</strong>
+                                </li>
+                            </ul>
+                            <button type="button" class="btn btn-primary btn-lg btn-block mt-3">
+                                Proceed to Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+ function changeQuantity(button, delta) {
+        const input = button.parentElement.querySelector('input[name="quantity"]');
+        let quantity = parseInt(input.value) + delta;
+        if (quantity < 0) quantity = 0; // Miktar negatif olamaz
+        input.value = quantity;
+
+        // Fiyatı güncelle
+        updateTotal();
+    }
+
+    function updateTotal() {
+        const priceElements = document.querySelectorAll('.price');
+        const totalAmountElement = document.getElementById('total-amount');
+        const finalAmountElement = document.getElementById('final-amount');
+        
+        let total = 0;
+        priceElements.forEach(priceElement => {
+            const price = parseFloat(priceElement.dataset.price);
+            const quantity = parseInt(priceElement.closest('.card-body').querySelector('input[name="quantity"]').value);
+            total += price * quantity;
+        });
+
+        totalAmountElement.textContent = `$${total.toFixed(2)}`;
+        finalAmountElement.textContent = `$${total.toFixed(2)}`;
+    }
+</script>
+{% endblock content %}

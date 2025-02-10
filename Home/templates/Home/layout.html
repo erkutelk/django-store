@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'Home/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Home/assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'Home/assets/css/templatemo-hexashop.css' %}">
+    <link rel="stylesheet" href="{% static 'Home/assets/css/owl-carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'Home/assets/css/lightbox.css' %}">
+</head>
+<body>
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+
+    {% include "Home/partials/_nav.html" %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% include "Home/partials/_footer.html" %}
+
+    <script src="{% static 'Home/assets/js/jquery-2.1.0.min.js' %}"></script>
+    <script src="{% static 'Home/assets/js/popper.js' %}"></script>
+    <script src="{% static 'Home/assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'Home/assets/js/owl-carousel.js' %}"></script>
+    <script src="{% static 'Home/assets/js/accordions.js' %}"></script>
+    <script src="{% static 'Home/assets/js/datepicker.js' %}"></script>
+    <script src="{% static 'Home/assets/js/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'Home/assets/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'Home/assets/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'Home/assets/js/imgfix.min.js' %}"></script>
+    <script src="{% static 'Home/assets/js/slick.js' %}"></script>
+    <script src="{% static 'Home/assets/js/lightbox.js' %}"></script>
+    <script src="{% static 'Home/assets/js/isotope.js' %}"></script>
+    <script src="{% static 'Home/assets/js/custom.js' %}"></script>
+    <script src="assets/js/quantity.js"></script>
+
+    <script>
+        $(function () {
+            var selectedClass = "";
+            $("p").click(function () {
+                selectedClass = $(this).attr("data-rel");
+                $("#portfolio").fadeTo(50, 0.1);
+                $("#portfolio div").not("." + selectedClass).fadeOut();
+                setTimeout(function () {
+                    $("." + selectedClass).fadeIn();
+                    $("#portfolio").fadeTo(50, 1);
+                }, 500);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+   
